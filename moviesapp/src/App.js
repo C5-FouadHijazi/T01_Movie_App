@@ -10,9 +10,12 @@ import MovieDetiles from "./components/MovieDetiles/MovieDetiles";
 export const tokenContext = createContext();
 
 function App() {
+
   const [message, setMessage] = useState("");
   const [myFavourites, setMyfavourites] = useState([]);
 
+  setMyfavourites(localStorage.getItem("fav") || []);
+  
   return (
     <div className="App">
       <tokenContext.Provider
