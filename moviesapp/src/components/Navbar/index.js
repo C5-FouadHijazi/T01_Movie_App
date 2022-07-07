@@ -1,40 +1,41 @@
 import React, { useStart, useContext, useEffect } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
+import { tokenContext } from "../../App";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Navbar, NavDropdown, Nav } from "react-bootstrap";
+import { Navbar, NavDropdown, Nav, Badge } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 
 const NavbarHead = () => {
+  const { message, setMessage, myFavourites, setMyfavourites } =
+    useContext(tokenContext);
+  const navigate = useNavigate();
+
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">My.Movies</Navbar.Brand>
+          <Navbar.Brand
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            My.Movies
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="#features">Movies</Nav.Link>
-              <Nav.Link href="#pricing"></Nav.Link>
-              {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  My Favourie{" "}
-                </NavDropdown.Item>
-              </NavDropdown> */}
-            </Nav>
+            <Nav className="me-auto"></Nav>
             <Nav>
-              <Nav.Link href="#deets">My Favorite</Nav.Link>
-              <Nav.Link eventKey={2} href="#memes">
-                Dank memes
-              </Nav.Link>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  navigate("/favourites");
+                }}
+              >
+                My Favorite <Badge>{myFavourites.length}</Badge>
+                <span className="visually-hidden">Added</span>
+              </Button>
             </Nav>
           </Navbar.Collapse>
         </Container>

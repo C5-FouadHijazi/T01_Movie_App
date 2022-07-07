@@ -6,8 +6,8 @@ import { Button } from "react-bootstrap";
 
 import Slideshow from "../slider";
 import "react-slideshow-image/dist/styles.css";
-const Home = () => {
-  const [movies, SetMovies] = useState([]);
+const TV = () => {
+  const [TV, SetTV] = useState([]);
   const [load, setLoad] = useState([]);
   const [page, setPage] = useState(2);
 
@@ -19,10 +19,10 @@ const Home = () => {
   const moveies_render = () => {
     axios
       .post(
-        `https://api.themoviedb.org/3/movie/popular?api_key=1bfa430aada4409bfa6a3c5528128e8a`
+        `https://api.themoviedb.org/3/tv/popular?api_key=1bfa430aada4409bfa6a3c5528128e8a&language=en-US`
       )
       .then((result) => {
-        SetMovies(result.data.results);
+        SetTV(result.data.results);
       })
       .catch((err) => {
         console.log(err);
@@ -38,7 +38,7 @@ const Home = () => {
 
       .then((result) => {
         setLoad(result.data.results);
-        SetMovies([...movies, ...load]);
+        SetTV([...TV, ...load]);
       })
       .catch((err) => {
         console.log(err);
@@ -51,10 +51,10 @@ const Home = () => {
   return (
     <div>
       <Slideshow />
-      <h2>Popular Movies</h2>
+      <h2>Popular TVs Show</h2>
       <div className="imgs-dev_poster_path">
-        {movies &&
-          movies.map((element, index) => {
+        {TV &&
+          TV.map((element, index) => {
             return (
               <div key={element.id}>
                 <img
@@ -68,19 +68,17 @@ const Home = () => {
             );
           })}
       </div>
-      <div className="d-flex justify-content-center">
-        <Button
-          variant="dark"
-          size="lg"
-          onClick={() => {
-            load_more();
-          }}
-        >
-          Load More
-        </Button>{" "}
-      </div>
+      <Button
+        variant="dark"
+        onClick={() => {
+          load_more();
+        }}
+      >
+        Load More
+      </Button>{" "}
+  
     </div>
   );
 };
 
-export default Home;
+export default TV;

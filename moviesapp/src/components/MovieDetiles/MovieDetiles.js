@@ -1,12 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Routes, Route, Link, useParams } from "react-router-dom";
-
+import { tokenContext } from "../../App";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-slideshow-image/dist/styles.css";
-import { Card } from "react-bootstrap";
+import { Button, Card ,Container,Row, Col} from "react-bootstrap";
 
 const MovieDetiles = () => {
+  const { message, setMessage, myFavourites, setMyfavourites } =
+    useContext(tokenContext);
+
   const [movies2, SetMovies2] = useState([]);
 
   const img_path = "http://image.tmdb.org/t/p/w500";
@@ -19,7 +22,6 @@ const MovieDetiles = () => {
         `https://api.themoviedb.org/3/movie/${id}?language=en-US&api_key=1bfa430aada4409bfa6a3c5528128e8a`
       )
       .then((result) => {
-        console.log(result.data);
         SetMovies2(result.data);
       })
       .catch((err) => {
@@ -32,26 +34,47 @@ const MovieDetiles = () => {
 
   return (
     <div>
-      <Card>
-        <Card.Img variant="top" src={`${img_path}${movies2.poster_path}`} style={{ width: "80%", height: "35rem"  }} />
-        <Card.Body>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      
-      <div className="imgs-dev_poster_path">
-        <div key={movies2.id}>
-          <div>{movies2.original_title}</div>
-          <div>{movies2.overview}</div>
-          <div>{movies2.release_date}</div>
-          <div>{movies2.vote_average}</div>
-          <img
-            className="movies-poster_path"
-            src={`${img_path}${movies2.poster_path}`}
-          />
+
+{/* <Container>
+      <Row style={{
+          backgroundImage: `url(http://image.tmdb.org/t/p/w500/${movies2.backdrop_path})`,
+        }}
+>
+        <Col xs={2} xl={4} ><img
+          class="card-img"
+          src={`${img_path}${movies2.backdrop_path}`}
+          alt="Card image"
+        /></Col>
+        <Col >Second, but unordered</Col>
+        <Col >Third, but first</Col>
+      </Row>
+    </Container> */}
+
+
+      <div class="card bg-dark text-white">
+        <img style={{
+          height:"35rem"
+        }}
+          class="card-img"
+          src={`${img_path}${movies2.backdrop_path}`}
+          alt="Card image"
+        />
+        <div class="card-img-overlay">
+          <h2 class="card-title">{movies2.original_title}</h2>
+          <p class="card-text">{movies2.overview}</p>
+          <p class="card-text">Release Date : {movies2.release_date}</p>
+          <p class="card-text">Vote Average : {movies2.vote_average}</p>
+          <Button
+            onClick={() => {
+              setMyfavourites([...myFavourites, movies2]);
+              localStorage.setItem(
+                "fav",
+                JSON.stringify([...myFavourites, movies2])
+              );
+            }}
+          >
+            Add to Favourite
+          </Button>
         </div>
       </div>
     </div>
@@ -59,3 +82,4 @@ const MovieDetiles = () => {
 };
 
 export default MovieDetiles;
+
