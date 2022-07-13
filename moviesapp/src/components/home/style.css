@@ -1,4 +1,6 @@
 .btn-secondary{
     margin-left: 305px;
 }
-
+.movies-poster_path  :hover{
+    transform: scale(-.99);
+}

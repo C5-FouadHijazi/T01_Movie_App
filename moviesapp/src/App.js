@@ -6,8 +6,9 @@ import { Routes, Route, Link, useParams } from "react-router-dom";
 import Home from "./components/home";
 import NavbarHead from "./components/navbar";
 import MovieDetiles from "./components/MovieDetiles/MovieDetiles";
-import Favourites from "./components/MyFavourite";
+import Favourites from "./components/myFavourite";
 import TV from "./components/Tv";
+import Trinding from "./components/trending";
 
 export const tokenContext = createContext();
 
@@ -39,6 +40,9 @@ function App() {
 
           
           <Route path="/TV" element={<TV />} />
+
+          <Route path="/Trending" element={<Trinding />} />
+
 
        
 

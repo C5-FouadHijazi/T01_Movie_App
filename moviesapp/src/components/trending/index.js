@@ -6,8 +6,8 @@ import { Button } from "react-bootstrap";
 
 import Slideshow from "../slider";
 import "react-slideshow-image/dist/styles.css";
-const Home = () => {
-  const [movies, SetMovies] = useState([]);
+const Trinding = () => {
+  const [TV, SetTV] = useState([]);
   const [load, setLoad] = useState([]);
   const [page, setPage] = useState(2);
 
@@ -18,11 +18,13 @@ const Home = () => {
 
   const moveies_render = () => {
     axios
-      .post(
-        `https://api.themoviedb.org/3/movie/popular?api_key=1bfa430aada4409bfa6a3c5528128e8a`
+      .get(
+        `https://api.themoviedb.org/3/trending/all/day?api_key=1bfa430aada4409bfa6a3c5528128e8a&language=en-US=${page}
+    `
       )
       .then((result) => {
-        SetMovies(result.data.results);
+        console.log(result);
+        SetTV(result.data.results);
       })
       .catch((err) => {
         console.log(err);
@@ -32,13 +34,15 @@ const Home = () => {
   const load_more = () => {
     setPage(page + 1);
     axios
-      .post(
-        `https://api.themoviedb.org/3/movie/popular?api_key=1bfa430aada4409bfa6a3c5528128e8a&page=${page}`
+      .get(
+        `
+        https://api.themoviedb.org/3/trending/all/day?api_key=1bfa430aada4409bfa6a3c5528128e8a&page&page=${page}
+        `
       )
 
       .then((result) => {
         setLoad(result.data.results);
-        SetMovies([...movies, ...result.data.results]);
+        SetTV([...TV, ...result.data.results]);
       })
       .catch((err) => {
         console.log(err);
@@ -51,19 +55,18 @@ const Home = () => {
   return (
     <div>
       <Slideshow />
-      <h2>Popular Movies</h2>
+      <h2>Trending</h2>
       <div className="imgs-dev_poster_path">
-        {movies &&
-          movies.map((element, index) => {
+        {TV &&
+          TV.map((element, index) => {
             return (
               <div key={element.id}>
-                <img 
+                <img
                   onClick={() => {
                     navigate(`/movieDetiles/${element.id}`);
                   }}
                   className="movies-poster_path"
                   src={`${img_path}${element.poster_path}`}
-                  
                 />
               </div>
             );
@@ -80,9 +83,8 @@ const Home = () => {
           Load More
         </Button>{" "}
       </div>
-      
     </div>
   );
 };
 
-export default Home;
+export default Trinding;

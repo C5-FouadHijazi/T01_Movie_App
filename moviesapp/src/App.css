@@ -20,10 +20,11 @@
   object-fit: cover;
   border-radius: 20px;
   cursor: pointer;
-  box-shadow: 0.5rem 0.5rem 2rem .0008rem black;
+  box-shadow: 0.3rem 0.3rem 1rem 0.01rem red;
 }
-.movies-poster_path :hover{
-  transform: scale(1.05);
+
+.movies-poster_path :hover {
+  transform:rotate(10%)
 }
 
 .movies-poster_path2 {
@@ -32,6 +33,15 @@
   object-fit: cover;
   border-radius: 20px;
 }
+.movies-poster_path2 :hover {
+ transform:rotate(10%)
+}
 h2 {
   margin: 2rem;
 }
+
+.fav_btn {
+  border-style: none;
+  background-color: rgba(255, 255, 255, 0);
+}
+

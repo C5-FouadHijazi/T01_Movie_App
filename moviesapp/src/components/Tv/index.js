@@ -19,7 +19,7 @@ const TV = () => {
   const moveies_render = () => {
     axios
       .post(
-        `https://api.themoviedb.org/3/tv/popular?api_key=1bfa430aada4409bfa6a3c5528128e8a&language=en-US`
+        `https://api.themoviedb.org/3/tv/popular?api_key=1bfa430aada4409bfa6a3c5528128e8a&language=en-US=${page}`
       )
       .then((result) => {
         SetTV(result.data.results);
@@ -38,7 +38,7 @@ const TV = () => {
 
       .then((result) => {
         setLoad(result.data.results);
-        SetTV([...TV, ...load]);
+        SetTV([...TV, ...result.data.results]);
       })
       .catch((err) => {
         console.log(err);
@@ -68,16 +68,18 @@ const TV = () => {
             );
           })}
       </div>
-      <Button
-        variant="dark"
-        onClick={() => {
-          load_more();
-        }}
-      >
-        Load More
-      </Button>{" "}
-  
-    </div>
+      <div className="d-flex justify-content-center">
+        <Button
+          variant="dark"
+          size="lg"
+          onClick={() => {
+            load_more();
+          }}
+        >
+          Load More
+        </Button>{" "}
+      </div>
+      </div>
   );
 };
 
