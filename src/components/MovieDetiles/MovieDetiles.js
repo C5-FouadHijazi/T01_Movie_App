@@ -4,7 +4,7 @@ import { tokenContext } from "../../App";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-slideshow-image/dist/styles.css";
-import { Button, Card, Container, Row, Col ,Modal } from "react-bootstrap";
+import { Button, Card, Container, Row, Col, Modal } from "react-bootstrap";
 
 
 import "./MovieDetiles.scss";
@@ -47,7 +47,7 @@ const MovieDetiles = () => {
 
   let found = false;
   let deleteIndex;
-
+  const deleteFromFav = myFavourites.splice(deleteIndex, 1);
   return (
     <div>
       <div class="movie_card" id="bright">
@@ -71,22 +71,29 @@ const MovieDetiles = () => {
                 color: isActive ? "red" : "",
               }}
               onClick={() => {
-               handleShow();
-                handleClick(); 
+                console.log("fav:", myFavourites)
                 myFavourites.forEach((elem, i) => {
-                  if (elem.id === elem.id) {
+                  if (elem.id === movies2.id) {
                     found = true;
                     deleteIndex = i;
+                    setMyfavourites(deleteFromFav)
+                    localStorage.setItem("fav", deleteFromFav);
                   }
                   if (found) {
-                    myFavourites.splice(deleteIndex, 1);
+                    //deleteFromFav =  myFavourites.splice(deleteIndex, 1);
+                    setMyfavourites(deleteFromFav)
+                    
                   } else {
-                    myFavourites.push(elem);
+                    setMyfavourites([...myFavourites, movies2]);
+                    localStorage.setItem("fav", JSON.stringify([...myFavourites, movies2]));
                   }
                 });
                 setMyfavourites([...myFavourites, movies2]);
-                localStorage.setItem( "fav", JSON.stringify([...myFavourites, movies2]));
+                localStorage.setItem("fav", JSON.stringify([...myFavourites, movies2]));
+                handleShow();
+                handleClick();
               }}
+
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -110,29 +117,29 @@ const MovieDetiles = () => {
             src={`${img_path}${movies2.backdrop_path}`}
             alt="Card image"
           />
-            <>
-      <Modal style={{color:"black"}}
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Favourite</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-         Would you like to add this movie to the you'r favourite list
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-          yes
-          </Button>
-          <Button variant="primary"  onHide={handleClose} >close</Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+          <>
+            <Modal style={{ color: "black" }}
+              show={show}
+              onHide={handleClose}
+              backdrop="static"
+              keyboard={false}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Favourite</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                Would you like to add this movie to the you'r favourite list
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  yes
+                </Button>
+                <Button variant="primary" onHide={handleClose} >close</Button>
+              </Modal.Footer>
+            </Modal>
+          </>
         </div>
-      
+
       </div>
     </div>
   );
