@@ -12,7 +12,7 @@ import "./MovieDetiles.scss";
 const MovieDetiles = () => {
   const { message, setMessage, myFavourites, setMyfavourites } =
     useContext(tokenContext);
-
+  console.log('START FAV ', myFavourites);
   const [movies2, SetMovies2] = useState([]);
   const [isActive, setIsActive] = useState(false);
   const [show, setShow] = useState(false);
@@ -45,9 +45,8 @@ const MovieDetiles = () => {
     getDeitels();
   }, []);
 
-  let found = false;
-  let deleteIndex;
-  const deleteFromFav = myFavourites.splice(deleteIndex, 1);
+
+
   return (
     <div>
       <div class="movie_card" id="bright">
@@ -80,18 +79,19 @@ const MovieDetiles = () => {
                     localStorage.setItem("fav", deleteFromFav);
                   }
                   if (found) {
-                    //deleteFromFav =  myFavourites.splice(deleteIndex, 1);
+                    deleteFromFav =  myFavourites.splice(deleteIndex, 1);
                     setMyfavourites(deleteFromFav)
-                    
+
                   } else {
                     setMyfavourites([...myFavourites, movies2]);
                     localStorage.setItem("fav", JSON.stringify([...myFavourites, movies2]));
                   }
                 });
-                setMyfavourites([...myFavourites, movies2]);
-                localStorage.setItem("fav", JSON.stringify([...myFavourites, movies2]));
-                handleShow();
-                handleClick();
+                { console.log('fav', myFavourites) }
+                localStorage.setItem("fav", JSON.stringify([...(JSON.parse(localStorage.getItem("fav")) || []), movies2]))
+                setMyfavourites([...(JSON.parse(localStorage.getItem('fav')))]);
+                // handleShow();
+                // handleClick();
               }}
 
             >

@@ -52,9 +52,9 @@ const NavbarHead = () => {
   
 
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("fav") || []);
+   /*  const items = JSON.parse(localStorage.getItem("fav") || []);
     console.log("items", items)
-    setFavorites(items);
+    setFavorites(items); */
   }, []);
 
 

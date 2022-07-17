@@ -15,7 +15,8 @@ export const tokenContext = createContext();
 function App() {
 
   const [message, setMessage] = useState("");
-  const [myFavourites, setMyfavourites] = useState(localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")): []);
+  const [myFavourites, setMyfavourites] = useState( JSON.parse(localStorage.getItem("fav")) || []);
+
 console.log(myFavourites,"app")
 
   return (
